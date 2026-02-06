@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Will You Be My Valentine?</title>
+
+    <!-- Google Font for cursive letter -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Comic Sans MS", cursive;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      .screen {
+        display: none;
+        height: 100vh;
+        width: 100vw;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        animation: fade 1s ease;
+      }
+
+      .active {
+        display: flex;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      button {
+        padding: 12px 25px;
+        border-radius: 20px;
+        border: none;
+        background: #8ccff0;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+        margin-top: 15px;
+      }
+
+      button:hover {
+        transform: scale(1.1);
+      }
+
+       /* 🔹 ADDED: smooth movement for NO button */
+       #noBtn {
+        transition: left 0.25s ease, top 0.25s ease, transform 0.15s ease;
+      }
+      /* ENVELOPE */
+      .envelope {
+        width: 180px;
+        animation: float 3s ease-in-out infinite;
+        cursor: pointer;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+      }
+
+      /* LETTER */
+      .letter {
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        max-width: 320px;
+        font-family: "Great Vibes", cursive;
+        font-size: 22px;
+        animation: pop 0.5s ease;
+      }
+
+      @keyframes pop {
+        from {
+          transform: scale(0.8);
+        }
+        to {
+          transform: scale(1);
+        }
+      }
+
+      /* DATE BUTTONS */
+      .date-btn {
+        margin: 10px;
+        animation: pop 0.4s ease;
+      }
+
+      /* CINNAMOROLL BACKGROUND */
+      .cinnabg {
+        background: url("https://i.pinimg.com/1200x/67/9f/f9/679ff9f9664eb3a442b33e9a963254a1.jpg");
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- CLICK / OPEN / CELEBRATE SOUNDS -->
+    <audio id="clickSound" src="click.mp3"></audio>
+    <audio id="openSound" src="open.mp3"></audio>
+    <audio id="celebrateSound" src="celebrate.mp3"></audio>
+    <audio id="passengerseatletter" src="PassengerSeat.mp3"></audio>
+
+    <!-- INTRO -->
+    <div id="intro" class="screen active">
+      <img
+        src="https://i.pinimg.com/originals/a0/36/08/a03608803bcbfd757e8fc330972c21a8.gif"
+        class="envelope"
+        onclick="openEnvelope()"
+      />
+      <p>Tap the envelope 💌</p>
+    </div>
+
+    <!-- VALENTINE -->
+    <div id="valentine" class="screen">
+      <h1>It's almost valentines day, no?</h1>
+      <p>I know we might be busy na this monday kay lage research and stuff</p>
+      <p>Soooooo, click the next button plz</p>
+      <img
+        src="https://i.pinimg.com/originals/b6/43/69/b64369fc0f212f8f96f94bf10b855ff7.gif"
+        width="150"
+      />
+      <button onclick="goQuestion()">Next</button>
+    </div>
+
+    <!-- QUESTION -->
+    <div id="question" class="screen">
+      <h2>Would you be my Valentine?</h2>
+      <img
+        src="https://i.pinimg.com/736x/e6/4d/06/e64d069aa4a5042fc7edfbd3bc3bf31b.jpg"
+        width="150"
+      />
+      <button onclick="yes()">Yes 💙</button>
+       <!-- 🔹 CHANGED (only added id + onmouseover) -->
+       <button id="noBtn" onclick="no()" onmouseover="moveNo()">No</button>
+      </div>
+  
+    </div>
+     
+    <!-- YES -->
+    <div id="yesScreen" class="screen">
+      <img
+        src="https://i.pinimg.com/originals/2f/1a/b4/2f1ab4adffb51d6f565a2eeaea71cfa9.gif"
+        width="250"
+      />
+      <h2>YAYYYYY 💕</h2>
+      <audio id="bgm" loop>
+        <source src="Passenger Seat.mp3" type="audio" />
+      </audio>
+      <button onclick="goLetter()">Open letter 💌</button>
+    </div>
+
+  <!-- NO -->
+  <div id="noScreen" class="screen">
+    <img
+      src="https://i.pinimg.com/originals/28/86/f9/2886f9621ffc67c82f590e1aa9de2090.gif"
+      width="250"
+    />
+      <p>are you sure? :(</p>
+      <button onclick="goFinalNo()">Yes</button>
+      <button onclick="goQuestion()">Go back</button>
+    </div>
+
+  <!-- FINAL NO -->
+<div id="finalNoScreen" class="screen">
+  <img
+    src="https://i.pinimg.com/originals/b9/23/61/b923613c71dcbe2a7311150d3cbad202.gif"
+    width="220"
+  />
+  <p>ok :( just close this nlng</p>
+</div>
+
+    <!-- LETTER -->
+    <div id="letterScreen" class="screen">
+      <img
+        src="https://i.pinimg.com/736x/a4/24/8d/a4248de234c69479cd1b430cbe4ef1df.jpg"
+        class="envelope"
+        onclick="showLetter()"
+      />
+      <p>         Hellooo my love, this letter is just about me being so grateful for having you sooo enjoy my love!</p>
+    </div>
+
+    <div id="letterContent" class="screen">
+      <div class="letter">
+        <img src="" class="envelope" onclick="showLetter()" />
+  
+        <!-- PASTE YOUR LETTER HERE -->
+        Hiii my love :)) 💙💙
+        <p>I want you to remember, always, that I’m here for you. Not just today, not just when it’s easy, but whenever you need me—through everything, through every little moment and every storm. I’ll always be here, steady, ready to support you, ready to make you smile, ready to be someone you can count on.</p>
+        <p>Because you’re worth it. You’re worth every thought, every effort, every little thing I do to make you feel seen, valued, and cared for.</p>
+        <p>with love,</p>
+        Shervana 💙
+      </div>
+      <button onclick="goDates()">Pick a date 💌</button>
+    </div>
+
+    <!-- DATES -->
+    <div id="dates" class="screen">
+      <h2>Pick your preferred date 💕</h2>
+      <button class="date-btn" onclick="final()">Cafe</button>
+      <button class="date-btn" onclick="final()">Movies</button>
+      <button class="date-btn" onclick="final()">Arcade</button>
+
+    </div>
+
+    <!-- FINAL -->
+    <div id="final" class="screen cinnabg">
+      <h2>Looking forward to our date baby!!! mwamwa 💙</h2>
+      <p> if you couldnt choose any thing, let's sabot2 it, and the day of the date din love :)) mwamwa </p>
+      <p> chat nlng oki? mwamwa </p>
+      <p id="countdown"></p>
+    </div>
+
+    <script>
+      function show(id) {
+        document
+          .querySelectorAll(".screen")
+          .forEach((s) => s.classList.remove("active"));
+        document.getElementById(id).classList.add("active");
+      }
+
+      function openEnvelope() {
+        show("valentine");
+      }
+
+      function goQuestion() {
+        show("question");
+      }
+
+      function yes() {
+        document.getElementById("celebrateSound").play();
+        show("yesScreen");
+      }
+
+      function no() {
+        show("noScreen");
+      }
+
+      function goLetter() {
+        show("letterScreen");
+
+        // Play YouTube audio when letter is opened
+        const ytAudio = document.getElementById("bgmYT");
+        ytAudio.src = ytAudio.src.replace("autoplay=0", "autoplay=1");
+      }
+
+      function showLetter() {
+        show("letterContent");
+      }
+
+      function goDates() {
+        show("dates");
+      }
+
+      function goFinalNo() {
+    show("finalNoScreen");
+    }
+      function final() {
+        show("final");
+      }
+ /* 🔹 ADDED: No button dodge logic */
+      let noTries = 0;
+
+      function moveNo() {
+        const noBtn = document.getElementById("noBtn");
+
+        if (noTries < 10) {
+          noTries++;
+
+          // little shake
+          noBtn.style.transform = "translateX(-5px)";
+          setTimeout(() => (noBtn.style.transform = "translateX(5px)"), 80);
+          setTimeout(() => (noBtn.style.transform = "translateX(0)"), 160);
+
+          // random position
+          const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+          const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+          noBtn.style.position = "absolute";
+          noBtn.style.left = Math.random() * maxX + "px";
+          noBtn.style.top = Math.random() * maxY + "px";
+        } else {
+          // after 3 tries, stop moving
+          noBtn.onmouseover = null;
+        }
+      }
+      // COUNTDOWN
+      const target = new Date("Feb 14, 2026 00:00:00").getTime();
+      setInterval(() => {
+        const now = new Date().getTime();
+        const diff = target - now;
+        if (diff <= 0) {
+          document.getElementById("countdown").innerHTML =
+            "Happy Valentine’s Day 💙";
+        } else {
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          document.getElementById("countdown").innerHTML =
+            days + " days left 💌";
+        }
+      }, 1000);
+    </script>
+  </body>
+</html>
